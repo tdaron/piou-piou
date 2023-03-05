@@ -58,6 +58,10 @@ This is pretty straightforward, you can control your spaceship with your phone o
 
 There are some "power up" that allows you to get more lasers, or to gain some score if you can catch them quickly !
 
+### Multiplayer
+
+You can obviously play in multiplayer at this game ! Just register multiples users and go !
+
 
 ### Technical Choices
 
