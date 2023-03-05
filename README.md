@@ -20,7 +20,7 @@ We decided to build a Space Shooter controlled by phone, by using accelerometer 
 ### A little confession
 
 This project might be the hardest to run, not because of our incapacity (i hope), but because we choose to use [accelerometer js api](https://developer.mozilla.org/en-US/docs/Web/API/Accelerometer) 
-but we figure out too late that it only works on HTTPS, or in localhost.
+but we figure out too late that it only works on HTTPS, or in pure localhost.
 
 We found a solution, of course, but it requires you to be on Android and to use Google Chrome.
 
