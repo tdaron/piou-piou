@@ -14,10 +14,10 @@ class Level:
             time.sleep(step)
             new_enemy = Enemy(self.display,(position,0),enemies[0],enemies[1],enemies[2],enemies[3],enemies[4],enemies[5])
             Enemy.entities.append()
-            all_sprite_list.add(new_enemy)
+            Entity.all_sprite_list.add(new_enemy)
 
 for i in range(10):
-    with open(f'level{i}.txt','r') as file:
+    with open(f'Levels/level{i}.txt','r') as file:
         data = file.readlines()
         level = Level(main.display,i)
         for line in data:

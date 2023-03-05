@@ -23,13 +23,16 @@ last_message = None
 levels = []
 def load_levels():
     global levels
-    for i in range(1,2):
-        with open(f'level{i}.txt', 'r') as file:
-            levels.append([])
-            data = file.readlines()
-            for line in data:
-                line = line.split(':')
-                levels[i-1].append(line)
+    for i in range(1,50):
+        try:
+            with open(f'Levels/level{i}.txt', 'r') as file:
+                levels.append([])
+                data = file.readlines()
+                for line in data:
+                    line = line.split(':')
+                    levels[i-1].append(line)
+        except FileNotFoundError:
+            break
 wave = -1
 wave_index = 0
 wave_loader = -1
@@ -41,10 +44,12 @@ def summon_level(scr_size):
     global wave_index
     time = pygame.time.get_ticks()
     if time > wave_loader + 4500/(len(Player.entities)) or wave_loader == -1:
-        print("[*] Spawning a new ship")
+        print("[*] Spawning a new ship on wave", wave,"with index", wave_index)
         wave_loader = time
         if wave_index == len(levels[wave]):
             wave += 1
+            if len(levels) == wave:
+                main()
             wave_index = 0
         else:
             line = levels[wave][wave_index]
@@ -67,8 +72,10 @@ def create_ship(sprite, position, damage, speed, bullet_speed, bullet_sprite, he
 def create_player(id, sprite, bullet_speed, damage):
     Player(id, display, [display.get_size()[0] // 2, display.get_size()[1] - 400], damage, sprite, bullet_speed)
 
+PLAYERS = list(range(1,5))
 
 def main():
+    global PLAYERS
     global display
     global last_message
     global wave
@@ -120,7 +127,7 @@ def main():
 
     # Creating player
     if not phone_input:
-        create_player(0, "Assets/Hero_ship.png", [0, -4], 10)
+        create_player(0, "Assets/Hero_ship1.png", [0, -4], 10)
 
     created = False
     prev_time = 0
@@ -144,7 +151,11 @@ def main():
                 elif type(x) == ShootMessage:
                     Player.entities[x.client_id].shoot()
                 elif type(x) == NewPlayerMessage:
-                    create_player(len(Player.entities), "Assets/Hero_ship.png", [0, -4], 10)
+                    if len(PLAYERS) == 0:
+                        PLAYERS = list(range(1,5))
+                    pla = random.choice(PLAYERS)
+                    PLAYERS.remove(pla)
+                    create_player(len(Player.entities), f"Assets/Hero_ship{pla}.png", [0, -4], 10)
                 elif type(x) == KillPlayerMessage:
                     Player.entities[x.client_id].self_kill()
                 elif type(x) == StartMessage:
@@ -179,7 +190,7 @@ def main():
             elif int(enemy_ship.clock) == enemy_ship.reload_time:
                 enemy_ship.clock = 0
                 try:
-
+                    enemy_ship.bullet_speed[0][0]
                     for i in range(len(enemy_ship.bullet_speed)):
                         enemy_ship.shoot(enemy_ship.bullet_speed[i])
 
@@ -285,6 +296,7 @@ def main():
 
         font = pygame.font.Font('./Assets/fonts/Retro.ttf', 40)
         font3 = pygame.font.Font('./Assets/fonts/Retro.ttf', 50)
+        font4 = pygame.font.Font('./Assets/fonts/Retro.ttf', 70)
         font2 = pygame.font.Font('./Assets/fonts/Retro.ttf', 20)
         text = font2.render(str(int(clock.get_fps())), 1, pygame.Color("LIGHTBLUE"))
         display.blit(text, (5,5))
@@ -294,6 +306,9 @@ def main():
             text3 = font3.render("Press start to launch the game", 1, pygame.Color("WHITE"))
             display.blit(text2, (scr_size.current_w/2-text2.get_width()/2, scr_size.current_h/2-text2.get_height()/2))
             display.blit(text3,(scr_size.current_w/2-text3.get_width()/2, scr_size.current_h/2-text3.get_height()/2+50))
+        elif wave >= 0:
+            text = font4.render(("Wave " if (wave+1) % 5 != 0 else "Boss ")+str(wave+1), 1, pygame.Color("WHITE"))
+            display.blit(text, (scr_size.current_w/2-text.get_width()/2, 50))
 
         # Updating the display
         pygame.display.flip()

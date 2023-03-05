@@ -19,7 +19,7 @@ class Player(entity.Entity):
         self.init_pos = init_position
         self.invulnerable = False
         self.invulnerableTime = 0
-        self.lvl = 4
+        self.lvl = 1
         self.god = False
         self.score = 0
 
@@ -77,17 +77,17 @@ class Player(entity.Entity):
         u = pygame.mixer.Sound("./Assets/Audio/gun-sound.wav")
         pygame.mixer.Sound.play(u)
         for i in range(self.lvl):
-            if i < 3 and self.lvl < 2:
+            if i < 3 and self.lvl < 3:
                 player_projectile = Bullet(display=self.display,
                                            sprite="Assets/Projectiles/Small_yellow_shpere_1.png",
-                                           init_position=(self.rect.x + self.rect.width * (i+1) // (self.lvl+1), self.rect.y),
+                                           init_position=(self.rect.x + self.sprite.get_width() * (i+1) // (self.lvl+1), self.rect.y),
                                            speed=self.bullet_speed, damage=self.damage, danger=False)
                 player_projectile.shooter = self
 
-            elif i < 3 and self.lvl >= 2:
+            elif i < 3 and self.lvl >= 3:
                 player_projectile = Bullet(display=self.display,
                                            sprite="Assets/Projectiles/Narrow_purple_1.png",
-                                           init_position=(self.rect.x + self.rect.width * (i+1) // (self.lvl+1), self.rect.y),
+                                           init_position=(self.rect.x + self.sprite.get_width() * (i+1) // (self.lvl+1), self.rect.y),
                                            speed=self.bullet_speed, damage=self.damage, danger=False)
                 player_projectile.shooter = self
 
@@ -95,13 +95,13 @@ class Player(entity.Entity):
 
                 player_projectile = Bullet(display=self.display,
                                            sprite="Assets/Projectiles/Narrow_purple_1.png",
-                                           init_position=(self.rect.x + self.rect.width * (i+1) // (self.lvl+1), self.rect.y),
-                                           speed=[2,-2], damage=self.damage, danger=False)
+                                           init_position=(self.rect.x + self.sprite.get_width() * (i+1) // (self.lvl+1), self.rect.y),
+                                           speed=[3,-3], damage=self.damage, danger=False)
                 player_projectile.shooter = self
 
             elif i == 4:
                 player_projectile = Bullet(display=self.display,
                                            sprite="Assets/Projectiles/Narrow_purple_1.png",
-                                           init_position=(self.spri.x + self.rect.width * (i+1) // (self.lvl+1), self.rect.y),
-                                           speed=[-2,-2], damage=self.damage, danger=False)
+                                           init_position=(self.rect.x + self.sprite.get_width() * (i+1) // (self.lvl+1), self.rect.y),
+                                           speed=[-3,-3], damage=self.damage, danger=False)
                 player_projectile.shooter = self

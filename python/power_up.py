@@ -7,14 +7,14 @@ from player import Player
 class Power_up(entity.Entity):
 
     power_up_sprites = ['Assets/Power_ups/Orbe_jaune.png']
-    down_timer = 5000
+    down_timer = 60000
     up_timer = 10030
     clock = 0
 
     def __init__(self, display, init_position, category):
         super().__init__(display, 0, 1)
         self.category = category
-        self.sprite = pygame.transform.scale_by(pygame.image.load(self.power_up_sprites[self.category]), 1)
+        self.sprite = pygame.transform.scale_by(pygame.image.load(self.power_up_sprites[self.category]), 0.25)
         self.rect = pygame.Rect(init_position, (self.sprite.get_width(), self.sprite.get_height()))
         self.clock = pygame.time.Clock()
         self.angle = 0

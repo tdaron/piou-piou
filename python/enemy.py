@@ -58,5 +58,5 @@ class Enemy(entity.Entity):
     def shoot(self,speed):
         bullet.Bullet(display=self.display,
                         sprite=self.bullet_sprite,
-                        init_position=(self.sprite.x + self.sprite.get_width(), self.sprite.y + self.sprite.get_height()), speed=speed,
+                        init_position=(self.rect.centerx, self.rect.centery), speed=speed,
                         damage=self.damage, danger=True)

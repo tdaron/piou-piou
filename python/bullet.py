@@ -22,7 +22,7 @@ class Bullet(Entity):
         else:
             Bullet.player_bullet_sprites.add(self)
             self.sprite = pygame.image.load(sprite)
-        self.rect = pygame.Rect((init_position[0]+self.sprite.get_width()//4, init_position[1]+self.sprite.get_height()//4), (self.sprite.get_width()*1//2, self.sprite.get_height()*1//2))
+        self.rect = pygame.Rect((init_position[0]-self.sprite.get_width()//2, init_position[1]-self.sprite.get_height()//2), (self.sprite.get_width()*1//2, self.sprite.get_height()*1//2))
         print(self.sprite.get_size())
         print(self.rect.size)
         self.width = self.rect.width
